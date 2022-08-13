@@ -1,2 +1,3 @@
-# fibonacci-over-engineered
-A sample App using ReactJS, Express and Redis/Postgres to build and deploy a frontend app that calculates, views and stores input Fib indices using multiple Docker containers.
+# Overengineered Fib App
+
+An intentionally complex App with ReactJS, Express and Redis/Postgres designed to view and store inputs of Fibonacci indices using multiple Docker containers to build and deploy.
