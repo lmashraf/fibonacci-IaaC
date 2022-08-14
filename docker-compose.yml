@@ -8,8 +8,16 @@ services:
   # Cache
   redis:
     image: 'redis:latest'
+  # Router
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
   # Server
-  server:
+  api:
     build:
       dockerfile: Dockerfile.dev
       context: ./server
