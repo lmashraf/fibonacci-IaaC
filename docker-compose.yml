@@ -8,7 +8,18 @@ services:
   # Cache
   redis:
     image: 'redis:latest'
-  # Server
+  # Router
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - '3050:80'
+  # API Server
   api:
     build:
       dockerfile: Dockerfile.dev
@@ -26,23 +37,14 @@ services:
       - ./server:/home/node/app
   # Client
   client:
+    environment:
+      - WDS_SOCKET_PORT=0  
     build:
       dockerfile: Dockerfile.dev
       context: ./client
     volumes:
       - /home/node/app/node_modules
       - ./client:/home/node/app
-  # Router
-  nginx:
-    restart: always
-    build:
-      dockerfile: Dockerfile.dev
-      context: ./nginx
-    ports:
-      - '3050:80'
-    depends_on:
-      - api
-      - client
   # Worker
   worker:
     build:
