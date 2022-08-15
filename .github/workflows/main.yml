@@ -29,17 +29,27 @@ jobs:
             # Create a deployment package
             - name: Create deployment package
               run: zip -r deploy.zip . -x '*.git*'
+            - uses: actions/upload-artifact@master
+              with:
+                name: deployment-package
+                path: deploy.zip
     test:
         runs-on: ubuntu-latest
         needs: build
         steps:
             - uses: actions/checkout@v2
+            - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}            
             - run: docker run -e CI=true lmachraf/fib-test-dev npm test -- --coverage
     deploy:
         runs-on: ubuntu-latest
         needs: build
         steps:
             # Deploy to AWS EB
+            - name: A
+              uses: actions/download-artifact@master
+              with:
+                name: deployment-package
+                path: deploy.zip
             - name: Deploy to Amazon Elastic Beanstalk
               uses: einaregilsson/beanstalk-deploy@v18
               with:
