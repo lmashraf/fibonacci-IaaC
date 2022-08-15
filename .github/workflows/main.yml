@@ -15,27 +15,17 @@ jobs:
               id: filter
               with:
                 filters: |
-                  docker-config:
+                  docker_config:
                     - 'docker-compose.yml'
-                  app-code:
+                  app_code:
                     - 'client/**'
                     - 'server/**'
                     - 'nginx/**'
                     - 'worker/**'
             - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-            - name: Build docker images
-            # Build DEV test image
-              run: docker build -t lmachraf/fib-test-dev -f ./client/Dockerfile.dev ./client
-            # Build all PROD docker images individually
-            - run: docker build -t lmachraf/fib-client-prod ./client
-            - run: docker build -t lmachraf/fib-nginx-prod ./nginx
-            - run: docker build -t lmachraf/fib-server-prod ./server
-            - run: docker build -t lmachraf/fib-worker-prod ./worker
-            # Push all images to Docker Hub
-            - run: docker push lmachraf/fib-client-prod
-            - run: docker push lmachraf/fib-nginx-prod
-            - run: docker push lmachraf/fib-server-prod
-            - run: docker push lmachraf/fib-worker-prod
+            - name: Build and publish Docker Images
+              if: steps.filter.outputs.app_code == 'true' || steps.filter.outputs.docker_config == 'true'
+              run: ${GITHUB_WORKSPACE}/.github/scripts/publish_docker_images.sh
             # Create a deployment package
             - name: Create deployment package
               run: zip -r deploy.zip . -x '*.git*'
