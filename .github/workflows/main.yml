@@ -28,7 +28,7 @@ jobs:
               run: ${GITHUB_WORKSPACE}/.github/scripts/publish_docker_images.sh
             # Create a deployment package
             - name: Create a deployment package artifact
-              run: zip -r ./artifacts/deploy.zip . -x '*.git*'
+              run: mkdir -p ./artifacts/ && zip -r ./artifacts/deploy.zip . -x '*.git*'
             - uses: actions/upload-artifact@v2
               with:
                 name: deployment-package
