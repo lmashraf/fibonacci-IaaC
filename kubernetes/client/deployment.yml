@@ -6,11 +6,11 @@ spec:
   replicas: 3
   selector:
     matchLabels:
-      component: web
+      component: client
   template:
     metadata:
       labels:
-        component: web
+        component: client
     spec:
       containers:
       - name: fib-client-prod
