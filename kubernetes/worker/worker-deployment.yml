@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: worker
+  template:
+    metadata:
+      labels:
+        component: worker
+    spec:
+      containers:
+      - name: fib-worker-prod
+        image: lmachraf/fib-worker-prod
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
