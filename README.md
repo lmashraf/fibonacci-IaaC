@@ -4,7 +4,7 @@ An intentionally complex App with ReactJS, Express and Redis/Postgres designed t
 
 see branch: fibonacci-IaaC-with-AWS
 
-# Kubernetes High Level Architecture:
+# Kubernetes High-Level Architecture:
 
 ```mermaid
 flowchart LR;
@@ -16,3 +16,7 @@ flowchart LR;
     ClusterIP:Deployment_Server_Pod-->ClusterIP:Deployment_Postgres_Pod;
     ClusterIP:Deployment_Postgres_Pod-->Postgres_PVC;
 ```
+
+# How to run locally?
+
+Simply run `docker-compose up --build`.
