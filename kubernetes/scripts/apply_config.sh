@@ -15,3 +15,7 @@ kubectl apply -f ../worker/
 # Redis
 echo "- Applying Redis k8s configuration ..."
 kubectl apply -f ../redis/
+
+# Postgres
+echo "- Applying Postgres k8s configuration ..."
+kubectl apply -f ../postgres/
