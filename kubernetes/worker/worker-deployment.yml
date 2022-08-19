@@ -15,6 +15,11 @@ spec:
       containers:
       - name: fib-worker-prod
         image: lmachraf/fib-worker-prod
+        env:
+          - name: REDIS_HOST
+            value: redis-cluster-ip-service
+          - name: REDIS_PORT
+            value: 6379
         resources:
           limits:
             memory: "128Mi"
