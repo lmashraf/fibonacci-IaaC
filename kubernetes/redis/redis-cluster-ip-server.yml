@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  component: redis-cluster-ip-service
+  name: redis-cluster-ip-service
 spec:
   type: ClusterIP
   selector:

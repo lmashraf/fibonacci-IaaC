@@ -9,3 +9,9 @@ kubectl get service
 
 echo "- Pods:"
 kubectl get pod
+
+echo "- Persistent Volumes:"
+kubectl get pv
+
+echo "- Persistent Volume Claims:"
+kubectl get pvc
