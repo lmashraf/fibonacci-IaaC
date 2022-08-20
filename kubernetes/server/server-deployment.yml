@@ -19,15 +19,20 @@ spec:
           - name: REDIS_HOST
             value: redis-cluster-ip-service
           - name: REDIS_PORT
-            value: 6379
+            value: '6379'
           - name: PGUSER
             value: postgres
           - name: PGHOST
             value: postgres-cluster-ip-service
           - name: PGPORT
-            value: 5432
+            value: '5432'
           - name: PGDATABASE
             value: postgres
+          - name: POSTGRES_PASSWORD
+            valueFrom: 
+              secretKeyRef: 
+                name: postgres-secret
+                key: PGPASSWORD
         resources:
           limits:
             memory: "128Mi"

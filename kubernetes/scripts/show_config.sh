@@ -15,3 +15,6 @@ kubectl get pv
 
 echo "- Persistent Volume Claims:"
 kubectl get pvc
+
+echo "- Secrets:"
+kubectl get secret
