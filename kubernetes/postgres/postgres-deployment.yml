@@ -17,12 +17,12 @@ spec:
           persistentVolumeClaim:
             claimName: postgres-persistent-volume-claim
       containers:
-      - name: fib-postgres-prod
-        image: lmachraf/fib-postgres-prod
+      - name: postgres
+        image: postgres
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 5432
         volumeMounts:

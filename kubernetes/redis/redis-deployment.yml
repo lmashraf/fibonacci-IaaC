@@ -13,11 +13,11 @@ spec:
         component: redis
     spec:
       containers:
-      - name: fib-redis-prod
-        image: lmachraf/fib-redis-prod
+      - name: redis
+        image: redis
         resources:
           limits:
             memory: "128Mi"
-            cpu: "500m"
+            cpu: "250m"
         ports:
         - containerPort: 6379
