@@ -19,3 +19,7 @@ kubectl apply -f ../redis/
 # Postgres
 echo "- Applying Postgres k8s configuration ..."
 kubectl apply -f ../postgres/
+
+# Ingress
+echo "- Applying Ingress configuration ..."
+kubectl apply -f ../ingress/
