@@ -5,7 +5,7 @@ on:
       - master
 
 env:
-  SHA: $(git rev-parse HEAD)
+  COMMIT_SHA: $(git rev-parse HEAD)
 
 jobs:
   build:
@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Run Tests
         run: |-
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD}}            
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}            
           docker build -t lmachraf/fib-test-dev -f ./client/Dockerfile.dev ./client
           docker run -e CI=true lmachraf/fib-test-dev npm test -- --coverage
 
@@ -40,18 +40,18 @@ jobs:
 
       - name: Build Docker Images
         run: |-
-          docker build -t lmachraf/fib-client-prod-k8s:latest -t lmachraf/fib-client-prod-k8s:${{ env.SHA }} -f ./client/Dockerfile ./client
-          docker build -t lmachraf/fib-server-prod-k8s:latest -t lmachraf/fib-server-prod-k8s:${{ env.SHA }} -f ./server/Dockerfile ./server
-          docker build -t lmachraf/fib-worker-prod-k8s:latest -t lmachraf/fib-worker-prod-k8s:${{ env.SHA }} -f ./server/Dockerfile ./server
+          docker build -t lmachraf/fib-client-prod-k8s:latest -t lmachraf/fib-client-prod-k8s:${{ env.COMMIT_SHA }} -f ./client/Dockerfile ./client
+          docker build -t lmachraf/fib-server-prod-k8s:latest -t lmachraf/fib-server-prod-k8s:${{ env.COMMIT_SHA }} -f ./server/Dockerfile ./server
+          docker build -t lmachraf/fib-worker-prod-k8s:latest -t lmachraf/fib-worker-prod-k8s:${{ env.COMMIT_SHA }} -f ./server/Dockerfile ./server
 
       - name: Push to Docker Hub
         run: |-          
           docker push lmachraf/fib-client-prod-k8s:latest
           docker push lmachraf/fib-server-prod-k8s:latest
           docker push lmachraf/fib-worker-prod-k8s:latest
-          docker push lmachraf/fib-client-prod-k8s:${{ env.SHA }}
-          docker push lmachraf/fib-server-prod-k8s:${{ env.SHA }}
-          docker push lmachraf/fib-worker-prod-k8s:${{ env.SHA }}
+          docker push lmachraf/fib-client-prod-k8s:${{ env.COMMIT_SHA }}
+          docker push lmachraf/fib-server-prod-k8s:${{ env.COMMIT_SHA }}
+          docker push lmachraf/fib-worker-prod-k8s:${{ env.COMMIT_SHA }}
 
       - name: Apply Kubernetes Configurations
         run: |-
@@ -61,6 +61,6 @@ jobs:
           kubectl apply -f ./kubernetes/postgres
           kubectl apply -f ./kubernetes/redis
           kubectl apply -f ./kubernetes/ingress
-          kubectl set image deployments/server-deployment server=lmachraf/fib-server-prod-k8s:${{ env.SHA }}
-          kubectl set image deployments/client-deployment client=lmachraf/fib-client-prod-k8s:${{ env.SHA }}
-          kubectl set image deployments/worker-deployment worker=lmachraf/fib-worker-prod-k8s:${{ env.SHA }}
+          kubectl set image deployments/server-deployment fib-server-prod=lmachraf/fib-server-prod-k8s:${{ env.COMMIT_SHA }}
+          kubectl set image deployments/client-deployment fib-client-prod=lmachraf/fib-client-prod-k8s:${{ env.COMMIT_SHA }}
+          kubectl set image deployments/worker-deployment fib-worker-prod=lmachraf/fib-worker-prod-k8s:${{ env.COMMIT_SHA }}
