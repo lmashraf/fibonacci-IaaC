@@ -8,9 +8,18 @@ metadata:
     kubernetes.io/ingress.class: 'nginx'
     nginx.ingress.kubernetes.io/use-regex: 'true'
     nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/ssl-redirect: 'true'
+    cert-manager.io/cluster-issuer: 'letsencrypt-prod'
 spec:
+  tls:
+    - hosts:
+        - mlebrazi.lol
+        - www.mlebrazi.lol
+        - k8s.mlebrazi.lol
+      secretName: mlebrazi-lol
   rules:
-    - http:
+    - host: mlebrazi.lol
+      http:
         paths:
         - path: /?(.*)
           pathType: Prefix
@@ -23,6 +32,40 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: server-cluster-ip-service 
+              name: server-cluster-ip-service
+              port:
+                number: 5000
+    - host: www.mlebrazi.lol
+      http:
+        paths:
+        - path: /?(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: client-cluster-ip-service
               port: 
+                number: 3000
+        - path: /api/?(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: server-cluster-ip-service
+              port:
+                number: 5000
+    - host: k8s.mlebrazi.lol
+      http:
+        paths:
+        - path: /?(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: client-cluster-ip-service
+              port: 
+                number: 3000
+        - path: /api/?(.*)
+          pathType: Prefix
+          backend:
+            service:
+              name: server-cluster-ip-service
+              port:
                 number: 5000

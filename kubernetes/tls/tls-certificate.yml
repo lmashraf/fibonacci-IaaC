@@ -11,10 +11,4 @@ spec:
   dnsNames:
     - mlebrazi.lol
     - www.mlebrazi.lol
-  acme:
-    config:
-      - http01:
-          ingressClass: nginx
-          domains:
-            - mlebrazi.lol
-            - www.mlebrazi.lol
+    - k8s.mlebrazi.lol
