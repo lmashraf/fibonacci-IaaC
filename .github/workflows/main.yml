@@ -61,6 +61,7 @@ jobs:
           kubectl apply -f ./kubernetes/postgres
           kubectl apply -f ./kubernetes/redis
           kubectl apply -f ./kubernetes/ingress
+          kubectl apply -f ./kubernetes/tls
           kubectl set image deployments/server-deployment fib-server-prod=lmachraf/fib-server-prod-k8s:${{ env.COMMIT_SHA }}
           kubectl set image deployments/client-deployment fib-client-prod=lmachraf/fib-client-prod-k8s:${{ env.COMMIT_SHA }}
           kubectl set image deployments/worker-deployment fib-worker-prod=lmachraf/fib-worker-prod-k8s:${{ env.COMMIT_SHA }}

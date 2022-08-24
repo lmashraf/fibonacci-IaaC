@@ -23,3 +23,7 @@ kubectl apply -f ../postgres/
 # Ingress
 echo "- Applying Ingress configuration ..."
 kubectl apply -f ../ingress/
+
+# HTTPS
+echo "- Applying HTTPS configuration ..."
+kubectl apply -f ../tls/
