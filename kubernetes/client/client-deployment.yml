@@ -13,7 +13,7 @@ spec:
         component: client
     spec:
       containers:
-      - name: fib-client-prod
-        image: lmachraf/fib-client-prod
+      - name: fib-client-dev
+        image: lmachraf/fib-client-dev
         ports:
         - containerPort: 3000

@@ -1,5 +1,7 @@
 FROM node:16-alpine
 
+ENV CI=true
+
 USER node
 
 RUN mkdir -p /home/node/app

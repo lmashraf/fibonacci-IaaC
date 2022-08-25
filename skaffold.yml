@@ -1,0 +1,46 @@
+apiVersion: skaffold/v2beta29
+kind: Config
+build:
+  local:
+    push: false
+  artifacts:
+    # Client
+    - image: lmachraf/fib-client-dev
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync: 
+        manual:
+          - src: "**/*.js"
+            dest: .
+          - src: "**/*.html"
+            dest: .
+          - src: "**/*.css"
+            dest: .
+    # Server
+    - image: lmachraf/fib-server-dev
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync: 
+        manual:
+          - src: "**/*.js"
+            dest: .
+    # Worker
+    - image: lmachraf/fib-worker-dev
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync: 
+        manual:
+          - src: "**/*.js"
+            dest: .
+deploy:
+  kubectl:
+    manifests:
+      - ./kubernetes/client/*
+      - ./kubernetes/server/*
+      - ./kubernetes/worker/*
+      - ./kubernetes/ingress/*
+      - ./kubernetes/redis/*
+      - ./kubernetes/postgres/*

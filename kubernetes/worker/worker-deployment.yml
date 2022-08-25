@@ -13,8 +13,8 @@ spec:
         component: worker
     spec:
       containers:
-      - name: fib-worker-prod
-        image: lmachraf/fib-worker-prod
+      - name: fib-worker-dev
+        image: lmachraf/fib-worker-dev
         env:
           - name: REDIS_HOST
             value: redis-cluster-ip-service

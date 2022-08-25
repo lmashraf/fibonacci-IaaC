@@ -13,8 +13,8 @@ spec:
         component: server
     spec:
       containers:
-      - name: fib-server-prod
-        image: lmachraf/fib-server-prod
+      - name: fib-server-dev
+        image: lmachraf/fib-server-dev
         env:
           - name: REDIS_HOST
             value: redis-cluster-ip-service
